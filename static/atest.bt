@@ -1,0 +1,260 @@
+padhexoctchrstxtcodeFID
+001a
+pg
+1
+Disk: tdisk4.dsk
+
+
+
+atest.BT.:
+BCPL.RUN 2.2 -- atest.BT , atest.BR = atest.bcpl
+ LOC	     1	S1		12
+ LOC	     2	S2		177775
+ LOC	     3	P1		LAB1
+ LOC	     4	P2		LAB27
+ LOC	     5	P3		LAB43
+ LOC	     6	P4		LAB73
+ LOC	     7	P5		LAB126
+ LOC	    10	P6		LAB144
+ EXT	    10	Ws
+
+let P1() be
+// frame size is 10 words (10+0)
+ 55001	LAB     1	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	        2	jsr    @370,Z	   (GETNEWFRAME)
+    10	        3	      10	
+  6367	        4	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  let f1 = 1 
+
+176520	        5	subzl X X    	   (1)
+ 55004	        6	sta X   4,P	   (f1)
+
+  for f2 = 1 to 10 do
+
+176520	        7	subzl X X    	   (1)
+ 55005	       10	sta X   5,P	   (f2)
+   411	       11	jmp     .+11 	   (LAB22)
+
+  [
+
+    let f3 = f2 * 2 + f1
+
+ 21005	LAB    12	lda 0   5,P	   (f2)
+101120	       13	movzl 0 0    	
+ 35004	       14	lda X   4,P	   (f1)
+163000	       15	add X 0    	
+ 41006	       16	sta 0   6,P	   (f3)
+ 21005	       17	lda 0   5,P	   (f2)
+101400	       20	inc 0 0    	
+ 41005	       21	sta 0   5,P	   (f2)
+ 21005	LAB    22	lda 0   5,P	   (f2)
+ 34520	       23	lda X   .+120 	   (#12)
+162112	       24	adcl# X 0 szc	// skip if AC0 gr X
+   765	       25	jmp     .-13 	   (LAB12)
+  6366	       26	jsr    @366,Z	   (RETURN)
+
+and P2( f1  ) be
+// frame size is 10 words (10+0)
+ 55001	       27	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	       30	jsr    @370,Z	   (GETNEWFRAME)
+    10	       31	      10	
+  6367	       32	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  let f2 = f1
+
+ 35004	       33	lda X   4,P	   (f1)
+ 55005	       34	sta X   5,P	   (f2)
+
+  if f2 gr 0 then 
+
+ 21005	       35	lda 0   5,P	   (f2)
+100513	       36	negl# 0 0 snc	// skip if AC0 gr 0
+   403	       37	jmp     .+3 	   (LAB42)
+
+  [
+
+    f1 = 7
+
+ 34530	       40	lda X   .+130 	   (#7)
+ 55004	       41	sta X   4,P	   (f1)
+  6366	LAB    42	jsr    @366,Z	   (RETURN)
+
+and P3( f1, f2 ) be
+// frame size is 11 words (11+0)
+ 55001	       43	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	       44	jsr    @370,Z	   (GETNEWFRAME)
+    11	       45	      11	
+  6367	       46	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  S1 = f1
+
+ 35004	       47	lda X   4,P	   (f1)
+ 56521	       50	sta X  @.+121 	   (S1)
+
+  let f3 = f1 + 5
+
+ 21004	       51	lda 0   4,P	   (f1)
+ 34520	       52	lda X   .+120 	   (#5)
+163000	       53	add X 0    	
+ 41006	       54	sta 0   6,P	   (f3)
+
+  test f3 ge f1 
+
+ 21006	       55	lda 0   6,P	   (f3)
+ 35004	       56	lda X   4,P	   (f1)
+162512	       57	subl# X 0 szc	// skip if AC0 ge X
+   406	       60	jmp     .+6 	   (LAB66)
+
+  ifso f3 = f3 + 2
+
+ 21006	       61	lda 0   6,P	   (f3)
+ 34511	       62	lda X   .+111 	   (#2)
+163000	       63	add X 0    	
+ 41006	       64	sta 0   6,P	   (f3)
+   405	       65	jmp     .+5 	   (LAB72)
+
+  ifnot f1 = f3-S1
+
+ 21006	LAB    66	lda 0   6,P	   (f3)
+ 36502	       67	lda X  @.+102 	   (S1)
+162400	       70	sub X 0    	
+ 41004	       71	sta 0   4,P	   (f1)
+  6366	LAB    72	jsr    @366,Z	   (RETURN)
+
+and P4( f1, f2, f3) be
+// frame size is 15 words (15+0)
+ 55001	       73	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	       74	jsr    @370,Z	   (GETNEWFRAME)
+    15	       75	      15	
+  6367	       76	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  let f4 = 0
+
+176400	       77	sub X X    	   (0)
+ 55007	      100	sta X   7,P	   (f4)
+
+  let f5 = f1 + 1
+
+ 21004	      101	lda 0   4,P	   (f1)
+101400	      102	inc 0 0    	
+ 41010	      103	sta 0   10,P	   (f5)
+
+  let f6 = f2 + f3
+
+ 21005	      104	lda 0   5,P	   (f2)
+ 35006	      105	lda X   6,P	   (f3)
+163000	      106	add X 0    	
+ 41011	      107	sta 0   11,P	   (f6)
+
+  let f7 = S2 - f6
+
+ 22464	      110	lda 0  @.+64 	   (S2)
+ 35011	      111	lda X   11,P	   (f6)
+162400	      112	sub X 0    	
+ 41012	      113	sta 0   12,P	   (f7)
+
+  while f7 > f5 do
+
+   405	      114	jmp     .+5 	   (LAB121)
+
+    f5 = f5 + f2
+
+ 21010	LAB   115	lda 0   10,P	   (f5)
+ 35005	      116	lda X   5,P	   (f2)
+163000	      117	add X 0    	
+ 41010	      120	sta 0   10,P	   (f5)
+ 21012	LAB   121	lda 0   12,P	   (f7)
+ 35010	      122	lda X   10,P	   (f5)
+162113	      123	adcl# X 0 snc	// skip if AC0 le X
+   771	      124	jmp     .-7 	   (LAB115)
+  6366	      125	jsr    @366,Z	   (RETURN)
+
+and P5() be 
+// frame size is 7 words (7+0)
+ 55001	      126	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	      127	jsr    @370,Z	   (GETNEWFRAME)
+     7	      130	       7	
+  6367	      131	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  Ws( "ATest*n" )
+
+  4405	      132	jsr     .+5 	// load X with string pointer
+  3101	      133	    3101	
+ 52145	      134	   52145	
+ 71564	      135	   71564	
+  6400	      136	    6400	
+161000	      137	mov X 0    	
+ 64435	      140	JSRII  .+35 	   @(Ws ) 1 arg
+     1	      141	       1	
+  6366	      142	jsr    @366,Z	   (RETURN)
+
+	// literals //
+
+    12	      143	      12	 = #12
+
+and P6() be
+// frame size is 15 words (10+5)
+ 55001	      144	sta X   1,P	   (TEMP1) of last frame is the return address
+  6370	      145	jsr    @370,Z	   (GETNEWFRAME)
+    15	      146	      15	
+  6367	      147	jsr    @367,Z	   (STOREARGS) if more than 3
+
+[
+
+  let f1 = vec 4
+
+ 20426	      150	lda 0   .+26 	   (#10)
+143000	      151	add P 0    	
+ 41004	      152	sta 0   4,P	   (f1)
+
+  f1!0 = 15
+
+ 20424	      153	lda 0   .+24 	   (#17)
+ 35004	      154	lda X   4,P	   (f1)
+ 41400	      155	sta 0   0,X	
+
+  f1!1 = 1
+
+102520	      156	subzl 0 0    	   (1)
+ 35004	      157	lda X   4,P	   (f1)
+ 41401	      160	sta 0   1,X	
+
+  f1!2 = 2
+
+ 20412	      161	lda 0   .+12 	   (#2)
+ 35004	      162	lda X   4,P	   (f1)
+ 41402	      163	sta 0   2,X	
+
+  f1!3 = 7
+
+ 20404	      164	lda 0   .+4 	   (#7)
+ 35004	      165	lda X   4,P	   (f1)
+ 41403	      166	sta 0   3,X	
+  6366	      167	jsr    @366,Z	   (RETURN)
+
+	// literals //
+
+     7	      170	       7	 = #7
+     0	      171	       0	 = S1
+     5	      172	       5	 = #5
+
+	// literals //
+
+     2	      173	       2	 = #2
+     0	      174	       0	 = S2
+     0	      175	       0	 = Ws
+    10	      176	      10	 = #10
+    17	      177	      17	 = #17
+
+atest.BR --    200 (128) WORDS

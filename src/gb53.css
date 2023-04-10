@@ -1,0 +1,192 @@
+:root	{
+   --D0:  hsl(  0, 100%, 45%);
+   --D1:  hsl( 30, 100%, 45%);
+   --D2:  hsl( 50, 100%, 45%);
+   --D3:  hsl(100, 100%, 45%);
+   --D4:  hsl(160, 100%, 45%);
+   --D5:  hsl(210, 100%, 45%);
+   --D6:  hsl(240, 100%, 45%);
+   --D7:  hsl(270, 100%, 45%);
+   --D8:  hsl(300, 100%, 45%);
+   --D9:  hsl(  0, 100%, 0%);
+
+   --L0:  hsl(  0, 100%, 75%);
+   --L1:  hsl( 30, 100%, 75%);
+   --L2:  hsl( 50, 100%, 75%);
+   --L3:  hsl(100, 100%, 75%);
+   --L4:  hsl(160, 100%, 75%);
+   --L5:  hsl(210, 100%, 75%);
+   --L6:  hsl(240, 100%, 75%);
+   --L7:  hsl(270, 100%, 75%);
+   --L8:  hsl(300, 100%, 75%);
+   --L9:  hsl(  0, 100%, 100%);
+
+}
+
+/*  field highlighting--  border-color,text-color,background-color */
+.e00		{ border: 1px solid var(--D0); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e01		{ border: 1px solid var(--D1); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e02		{ border: 1px solid var(--D2); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e03		{ border: 1px solid var(--D3); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e04		{ border: 1px solid var(--D4); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e05		{ border: 1px solid var(--D5); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e06		{ border: 1px solid var(--D6); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e07		{ border: 1px solid var(--D7); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e08		{ border: 1px solid var(--D8); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e09		{ border: 1px solid var(--D9); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e10		{ border: 1px solid var(--L0); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e11		{ border: 1px solid var(--L1); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e12		{ border: 1px solid var(--L2); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e13		{ border: 1px solid var(--L3); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e14		{ border: 1px solid var(--L4); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e15		{ border: 1px solid var(--L5); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e16		{ border: 1px solid var(--L6); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e17		{ border: 1px solid var(--L7); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e18		{ border: 1px solid var(--L8); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+.e19		{ border: 1px solid var(--L9); margin: 1px 2px 1px 2px; padding: 1px 2px 1px 2px; }
+
+.t00		{ color: var(--D0); }
+.t01		{ color: var(--D1); }
+.t02		{ color: var(--D2); }
+.t03		{ color: var(--D3); }
+.t04		{ color: var(--D4); }
+.t05		{ color: var(--D5); }
+.t06		{ color: var(--D6); }
+.t07		{ color: var(--D7); }
+.t08		{ color: var(--D8); }
+.t09		{ color: var(--D9); }
+.t10		{ color: var(--L0); }
+.t11		{ color: var(--L1); }
+.t12		{ color: var(--L2); }
+.t13		{ color: var(--L3); }
+.t14		{ color: var(--L4); }
+.t15		{ color: var(--L5); }
+.t16		{ color: var(--L6); }
+.t17		{ color: var(--L7); }
+.t18		{ color: var(--L8); }
+.t19		{ color: var(--L9); }
+
+.b00		{ background-color: var(--D0); }
+.b01		{ background-color: var(--D1); }
+.b02		{ background-color: var(--D2); }
+.b03		{ background-color: var(--D3); }
+.b04		{ background-color: var(--D4); }
+.b05		{ background-color: var(--D5); }
+.b06		{ background-color: var(--D6); }
+.b07		{ background-color: var(--D7); }
+.b08		{ background-color: var(--D8); }
+.b09		{ background-color: var(--D9); }
+.b10		{ background-color: var(--L0); }
+.b11		{ background-color: var(--L1); }
+.b12		{ background-color: var(--L2); }
+.b13		{ background-color: var(--L3); }
+.b14		{ background-color: var(--L4); }
+.b15		{ background-color: var(--L5); }
+.b16		{ background-color: var(--L6); }
+.b17		{ background-color: var(--L7); }
+.b18		{ background-color: var(--L8); }
+.b19		{ background-color: var(--L9); }
+
+
+#colorSel	{  }
+.modal		{ position: absolute; background-color: white; 
+				left: 100px; top: 100px; height: 330px; width: auto;
+				padding: 5px; border: 2px solid black;
+			}
+.cp 		{ display: inline-block; border: 1px solid black; padding: 3px; margin: 2px; font-size: 12px; }
+.ex			{ font-family: courier; font-size: 12px; }
+.box 		{ border: 1px solid black; margin-bottom: 5px; margin-left: 5px; }
+.off 		{ display: none; }
+
+
+/* graphEd 
+.sel 		{ color: red; }
+.guide		{ color: blue; }
+#status 	{ text-align: center; padding-left: 5px; }
+#vardlg 	{ border: solid 1px black;}
+#varNmBox	{ width: 5em; }
+#varStyle	{ width: 5em; }
+#varDefBox	{ width: 15em; }
+#varVal		{ width: 20em; }
+#grpNm		{ width: 5em; }
+#varNm		{ font-weight: bold; font-size: large; }
+#defType	{ font-weight: bolder; font-size: larger; padding: 2px 4px 2px 4px;}
+#varDef		{ font-size: large; }
+#varVal		{ font-size: small; }
+.val		{ width: 3em; padding: 0px; margin: 1px; }
+
+.LevCk		{ font-size: 16px; margin-left: 2px; }
+.LevBx		{ text-align: center; }
+.LevBoxes	{ display: flex; }
+*/
+
+html 			{  height: 100%; }
+body			{  height: 100%;  width: 100%;  margin: 0;	
+					font-family: Ubuntu;  background: var(--L2);
+					overflow: hidden;   display: grid;  
+					grid-template-columns: 300px auto;
+					grid-template-rows: 80px auto;
+					grid-template-areas: 
+						"hdr hdr"
+						"sbar data";
+				}
+pre				{ line-height: 19px; }
+#Popup			{ 	position: absolute;  left:250px; top: 150px;
+					border: 1px solid black; margin: 10px; padding: 10px;
+					background-color: var(--L3); overflow-y: auto;
+				}
+.hide			{ display: none }
+#Test			{ position: absolute;  visibility: hidden;
+				  height: auto; width: auto; white-space: nowrap; font-family: courier; 
+				}
+#header 		{  grid-area: hdr;	background: var(--L1);	border: 1px solid black;  padding: 5px 0 0 0;  }
+#sideBar 		{  grid-area: sbar;	overflow-y: auto;	overflow-x: hidden;	border: 1px solid black;	background: var(--L1); }
+#data 			{  grid-area: data;	overflow: auto;   background: white;  border: 1px solid black;	min-width: 0; font-family: courier; }
+#data2			{  grid-area: data2; overflow: auto;   background: white;  border: 1px solid black;	min-width: 0; font-family: courier; }
+
+#headerContent 	{  margin-left: 10px;  font-weight: bold; }
+input[type=file]	{ visibility: hidden; width: 5em; }
+.gui input[type=text]		{ width: 3em; }
+.gui 			{  margin: 0 0 0 5px; }
+.guibx		 	{  border: 1px solid black; padding: 0 2px 0 2px; }
+.glev1			{  margin-left: 10px; }
+.glev2			{  margin-left: 20px; }
+.glev3			{  margin-left: 30px; }
+.br::after		{  white-space: pre; content: '\a';  }
+
+/*  collapsible geometry sidebar */
+/* Remove default bullets */
+ul {
+  list-style-type: none;
+  padding-inline-start: 6px;
+  width: 400px;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}

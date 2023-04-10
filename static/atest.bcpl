@@ -1,0 +1,65 @@
+atest.bcpl.:
+// atest.bcpl
+
+external [
+  Ws
+  ]
+
+static [  
+  S1 = 10
+  S2 = -3 
+]
+
+structure str:
+[
+  length byte
+  ch^1,255 byte
+]
+
+let P1() be
+[
+  let f1 = 1 
+  for f2 = 1 to 10 do
+  [
+    let f3 = f2 * 2 + f1
+  ]
+ ]
+and P2( f1  ) be
+[
+  let f2 = f1
+  if f2 gr 0 then 
+  [
+    f1 = 7
+  ]
+]
+and P3( f1, f2 ) be
+[
+  S1 = f1
+  let f3 = f1 + 5
+  test f3 ge f1 
+  ifso f3 = f3 + 2
+  ifnot f1 = f3-S1
+]
+and P4( f1, f2, f3) be
+[
+  let f4 = 0
+  let f5 = f1 + 1
+  let f6 = f2 + f3
+  let f7 = S2 - f6
+  while f7 > f5 do
+    f5 = f5 + f2
+]
+
+and P5() be 
+[
+  Ws( "ATest*n" )
+]
+and P6() be
+[
+  let f1 = vec 4
+  f1!0 = 15
+  f1!1 = 1
+  f1!2 = 2
+  f1!3 = 7
+]
+ 

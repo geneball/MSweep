@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title id='title'>App  Mar2023  gb53</title>
+    <link  	rel="stylesheet" 	href="gb53.css" >
+	<!-- <link rel="manifest" href="trek.webmanifest"> -->
+</head>
+<body>
+	<div id='header'>
+		<div id='info' class='gui'> </div>
+	</div>
+	<div id='sideBar'> </div>
+	<div id='data'> </div>
+	<!-- <div id='data2'> </div> -->
+
+	<div id='colorSel' class='modal' hidden>
+	Background: <br>
+		<label class='cp b00 t19'> &nbsp;00 &nbsp; <input type='radio' name='bkgfmt' id='b00' > </label>
+		<label class='cp b01 t19'> &nbsp;01 &nbsp; <input type='radio' name='bkgfmt' id='b01' > </label> 
+		<label class='cp b02 t19'> &nbsp;02 &nbsp; <input type='radio' name='bkgfmt' id='b02' > </label>
+		<label class='cp b03 t19'> &nbsp;03 &nbsp; <input type='radio' name='bkgfmt' id='b03' > </label>
+		<label class='cp b04 t19'> &nbsp;04 &nbsp; <input type='radio' name='bkgfmt' id='b04' > </label> 
+		<label class='cp b05 t19'> &nbsp;05 &nbsp; <input type='radio' name='bkgfmt' id='b05' > </label>
+		<label class='cp b06 t19'> &nbsp;06 &nbsp; <input type='radio' name='bkgfmt' id='b06' > </label> 
+		<label class='cp b07 t19'> &nbsp;07 &nbsp; <input type='radio' name='bkgfmt' id='b07' > </label>
+		<label class='cp b08 t19'> &nbsp;08 &nbsp; <input type='radio' name='bkgfmt' id='b08' > </label>
+		<label class='cp b09 t19'> &nbsp;09 &nbsp; <input type='radio' name='bkgfmt' id='b09' > </label> <br>
+		<label class='cp b10 t09'> &nbsp;10 &nbsp; <input type='radio' name='bkgfmt' id='b10' > </label>
+		<label class='cp b11 t09'> &nbsp;11 &nbsp; <input type='radio' name='bkgfmt' id='b11' > </label>
+		<label class='cp b12 t09'> &nbsp;12 &nbsp; <input type='radio' name='bkgfmt' id='b12' > </label>
+		<label class='cp b13 t09'> &nbsp;13 &nbsp; <input type='radio' name='bkgfmt' id='b13' > </label>
+		<label class='cp b14 t09'> &nbsp;14 &nbsp; <input type='radio' name='bkgfmt' id='b14' > </label>
+		<label class='cp b15 t09'> &nbsp;15 &nbsp; <input type='radio' name='bkgfmt' id='b15' > </label>
+		<label class='cp b16 t09'> &nbsp;16 &nbsp; <input type='radio' name='bkgfmt' id='b16' > </label> 
+		<label class='cp b17 t09'> &nbsp;17 &nbsp; <input type='radio' name='bkgfmt' id='b17' > </label>
+		<label class='cp b18 t09'> &nbsp;18 &nbsp; <input type='radio' name='bkgfmt' id='b18' > </label>
+		<label class='cp b19 t09'> &nbsp;19 &nbsp; <input type='radio' name='bkgfmt' id='b19' > </label> <br> <br>
+	Text: <br>
+		<label class='cp b00 t19'> &nbsp;00 &nbsp; <input type='radio' name='txtfmt' id='t00' > </label>
+		<label class='cp b01 t19'> &nbsp;01 &nbsp; <input type='radio' name='txtfmt' id='t01' > </label> 
+		<label class='cp b02 t19'> &nbsp;02 &nbsp; <input type='radio' name='txtfmt' id='t02' > </label>
+		<label class='cp b03 t19'> &nbsp;03 &nbsp; <input type='radio' name='txtfmt' id='t03' > </label>
+		<label class='cp b04 t19'> &nbsp;04 &nbsp; <input type='radio' name='txtfmt' id='t04' > </label> 
+		<label class='cp b05 t19'> &nbsp;05 &nbsp; <input type='radio' name='txtfmt' id='t05' > </label>
+		<label class='cp b06 t19'> &nbsp;06 &nbsp; <input type='radio' name='txtfmt' id='t06' > </label> 
+		<label class='cp b07 t19'> &nbsp;07 &nbsp; <input type='radio' name='txtfmt' id='t07' > </label>
+		<label class='cp b08 t19'> &nbsp;08 &nbsp; <input type='radio' name='txtfmt' id='t08' > </label>
+		<label class='cp b09 t19'> &nbsp;09 &nbsp; <input type='radio' name='txtfmt' id='t09' > </label> <br>
+		<label class='cp b10 t09'> &nbsp;10 &nbsp; <input type='radio' name='txtfmt' id='t10' > </label>
+		<label class='cp b11 t09'> &nbsp;11 &nbsp; <input type='radio' name='txtfmt' id='t11' > </label>
+		<label class='cp b12 t09'> &nbsp;12 &nbsp; <input type='radio' name='txtfmt' id='t12' > </label>
+		<label class='cp b13 t09'> &nbsp;13 &nbsp; <input type='radio' name='txtfmt' id='t13' > </label>
+		<label class='cp b14 t09'> &nbsp;14 &nbsp; <input type='radio' name='txtfmt' id='t14' > </label>
+		<label class='cp b15 t09'> &nbsp;15 &nbsp; <input type='radio' name='txtfmt' id='t15' > </label>
+		<label class='cp b16 t09'> &nbsp;16 &nbsp; <input type='radio' name='txtfmt' id='t16' > </label> 
+		<label class='cp b17 t09'> &nbsp;17 &nbsp; <input type='radio' name='txtfmt' id='t17' > </label>
+		<label class='cp b18 t09'> &nbsp;18 &nbsp; <input type='radio' name='txtfmt' id='t18' > </label>
+		<label class='cp b19 t09'> &nbsp;19 &nbsp; <input type='radio' name='txtfmt' id='t19' > </label> <br> <br>
+
+	Box: <br>
+		<label class='cp b00 t19'> &nbsp;00 &nbsp; <input type='radio' name='boxfmt' id='e00' > </label>
+		<label class='cp b01 t19'> &nbsp;01 &nbsp; <input type='radio' name='boxfmt' id='e01' > </label> 
+		<label class='cp b02 t19'> &nbsp;02 &nbsp; <input type='radio' name='boxfmt' id='e02' > </label>
+		<label class='cp b03 t19'> &nbsp;03 &nbsp; <input type='radio' name='boxfmt' id='e03' > </label>
+		<label class='cp b04 t19'> &nbsp;04 &nbsp; <input type='radio' name='boxfmt' id='e04' > </label> 
+		<label class='cp b05 t19'> &nbsp;05 &nbsp; <input type='radio' name='boxfmt' id='e05' > </label>
+		<label class='cp b06 t19'> &nbsp;06 &nbsp; <input type='radio' name='boxfmt' id='e06' > </label> 
+		<label class='cp b07 t19'> &nbsp;07 &nbsp; <input type='radio' name='boxfmt' id='e07' > </label>
+		<label class='cp b08 t19'> &nbsp;08 &nbsp; <input type='radio' name='boxfmt' id='e08' > </label>
+		<label class='cp b09 t19'> &nbsp;09 &nbsp; <input type='radio' name='boxfmt' id='e09' > </label> <br>
+		<label class='cp b10 t09'> &nbsp;10 &nbsp; <input type='radio' name='boxfmt' id='e10' > </label>
+		<label class='cp b11 t09'> &nbsp;11 &nbsp; <input type='radio' name='boxfmt' id='e11' > </label>
+		<label class='cp b12 t09'> &nbsp;12 &nbsp; <input type='radio' name='boxfmt' id='e12' > </label>
+		<label class='cp b13 t09'> &nbsp;13 &nbsp; <input type='radio' name='boxfmt' id='e13' > </label>
+		<label class='cp b14 t09'> &nbsp;14 &nbsp; <input type='radio' name='boxfmt' id='e14' > </label>
+		<label class='cp b15 t09'> &nbsp;15 &nbsp; <input type='radio' name='boxfmt' id='e15' > </label>
+		<label class='cp b16 t09'> &nbsp;16 &nbsp; <input type='radio' name='boxfmt' id='e16' > </label> 
+		<label class='cp b17 t09'> &nbsp;17 &nbsp; <input type='radio' name='boxfmt' id='e17' > </label>
+		<label class='cp b18 t09'> &nbsp;18 &nbsp; <input type='radio' name='boxfmt' id='e18' > </label>
+		<label class='cp b19 t09'> &nbsp;19 &nbsp; <input type='radio' name='boxfmt' id='e19' > </label> <br> <br>
+	
+	<span id="fmtexample" class="b00 t09 e19"> Example  </span>  <button id='selFmt'> Select </button>
+	</div>
+
+<div id="Test">
+  <pre>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</pre>
+</div>
+<div id="Popup" class="hide">
+</div>
+
+</body>
+</html>
