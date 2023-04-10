@@ -329,23 +329,6 @@ export class AltoRun {
 		prc.nest--
 		this.addC( prc, prc.iEnd, '}' )
 	}
-	showProc( prc, verbose ){
-		let html = `<pre> Proc ${prc.nm} <br>`
-		for ( let i= prc.entryIdx; i<=prc.iEnd; i++ ){
-			let o = prc.ops[i]
-			if ( o ){
-				if (typeof o.idx != 'number') debugger
-				if ( prc.Labs[ o.idx ] && verbose )
-					html += `L${o.idx} <br>`
-				let ccd = prc.ccode[ o.idx ]
-				if ( verbose ) 
-					html += `${o.idx} ${H(this.fileCodeStart+o.idx)}: ${H(this.code[o.idx])}  ${o.inst.asm} <br>`
-				if ( ccd != undefined )
-					html += `${ccd} <br>`
-			}
-		}
-		HUI.popup( html + '</pre>' )
-	}
 	addC( prc, icd, code ){
 		let nest = '                  '.substring( 0, prc.nest*4 )
 		console.log( `addC: ${code}` )
@@ -374,7 +357,7 @@ export class AltoRun {
 			}
 		}
 		let descr = `${prc.nm}.${icd} N=${prc.nest}  ${a.asm} ` + prc.control.join(' ')
-		console.log( descr )
+	//	console.log( descr )
 		
 		switch ( a.op ){
 			case 'lda':
@@ -555,7 +538,23 @@ export class AltoRun {
 			prc.test = test		// could be loop or ifThen
 		}
 	}
-
+	showProc( prc, verbose ){
+		let html = `<pre> Proc ${prc.nm} <br>`
+		for ( let i= prc.entryIdx; i<=prc.iEnd; i++ ){
+			let o = prc.ops[i]
+			if ( o ){
+				if (typeof o.idx != 'number') debugger
+				if ( prc.Labs[ o.idx ] && verbose )
+					html += `L${o.idx} <br>`
+				let ccd = prc.ccode[ o.idx ]
+				if ( verbose ) 
+					html += `${o.idx} ${H(this.fileCodeStart+o.idx)}: ${H(this.code[o.idx])}  ${o.inst.asm} <br>`
+				if ( ccd != undefined )
+					html += `${ccd} <br>`
+			}
+		}
+		HUI.popup( html + '</pre>' )
+	}
 }
 
 export class AltoInstr {

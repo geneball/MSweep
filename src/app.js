@@ -192,54 +192,6 @@ export class App {
 			HUI.gEl('data').innerHTML = this.disk.showPages( fid, parseInt(pg) )
 		}
 	}
-/*
-	eof( wa ){
-		return wa >= this.data.length
-	}
-	W( wa ){
-		//let ba = wa*2
-		if (this.eof(wa)) return 0
-		return this.data[wa] //+ ( this.data[ba+1] << 8 )
-	}
-	Sh( fmt, addr, val ){
-		let cls = 'b19 t09 e19'
-		if ( this.classifier )
-			cls = this.classifier.evalCls( addr, val )
-		switch (fmt){
-			case 'O': return `<span class="${cls}">${O(val)}</span>` 
-			case 'H': return `<span class="${cls}">${H(val)}</span>` 
-			case 'I': return `<span class="${cls}">${asInst(val)}</span>` 
-		}
-	}
-	I( v ){
-		let a = this.AI.frInstr( wd )
-		return this.AI.toStr( a )
-	}
-	S( s ){
-		let cls = s==' 55001'? 'sta':'w'
-		return `<span class="${cls}"> ${s} </span>`
-	}
-	asData( addr, data ){
-		let hx = '', oct = '', txt = '', code = ''
-		if ( App.SW.hex ) hx += H(addr) + ':'
-		if ( App.SW.oct ) oct += O(addr) + ':'
-		for ( let i=0; i<data.length; i++ ){
-			let wd = data[i]
-			if ( App.SW.hex ) hx 		+= this.Sh( 'H', addr+i, wd )
-			if ( App.SW.oct ) oct 		+= this.Sh( 'O', addr+i, wd )
-			if ( App.SW.code ) code 	+= this.Sh( 'I', addr+i, wd )
-		}
-		if ( App.SW.chrs ) txt = ' ' + asChrs( data )
-		if ( App.SW.txt ) return asTxt( data )
-		return hx + oct + code + txt + '<br>'
-	}
-	// resetGroup( obj, fld, lbl, nm, par, hide, fn ){
-		// if ( obj[fld] == undefined ) 
-			// obj[fld] = par.addGroup( lbl, nm, hide, fn )
-		// obj[fld].clearGroup()
-		// return obj[fld]
-	// }
-	*/
 	selFile( cf ){
 		for (let f of Object.values( this.openfiles )){
 			if ( f != cf )
@@ -316,27 +268,8 @@ export class App {
 
 		return cf.nm + ':<br>' + cf.classifier.showData( cf.filedata, App.SW, App.dataWidth )
 	}
-/*
-	showData( data, st, end ){
-		if (data==undefined) data = this.data
-		if ( st!=undefined )
-			App.dumpAddr = st
-		else
-			st = App.dumpAddr
-		if ( st < 0 ) st = 0		
-		if ( end==undefined ) end = st + App.dumpStep
-		if ( end > data.length-1 ) end = data.length-1
-		let step = App.dumpLine
-		
-		let html = '<pre>'
-		for ( let i=st; i<=end; i+=step ){
-			html += this.asData( i, data.slice( i, i+step )) 
-		}
-		return html +  '</pre>'
-	}
-	*/
 	addMsg( s ){
 		this.sbar.addLine( '', s )
 	}
 }
-var jsApp = new App( 'js App gb53 Mar2023' )
+var jsApp = new App( 'AltoDecode gb53 Apr2023' )
