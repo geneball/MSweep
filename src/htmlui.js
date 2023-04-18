@@ -128,14 +128,17 @@ export class HUI {
 }
 
 export class GUI {
+	static guiCnt = 0
 	constructor( parId, gnm, str, hide ){
 		this.level = 0
+		this.idcnt = 0
 		this.parId = parId
 		this.par = HUI.gEl( parId )
 		if ( this.par==null ) 
 			err( `GUI: element ${parId} not found` )
 		this.nm = str? str : 'G'
-		this.id = `${parId}_g${gnm}`
+		this.id = `gui${GUI.guiCnt}`
+		GUI.guiCnt++
 		
 		let grp = HUI.newEl( 'span', '', 'gui_group', '' )
 		this.grpnm = HUI.newEl( 'span', '', `gui_grpnm caret`, this.nm )
@@ -147,6 +150,10 @@ export class GUI {
 		this.grpnm.addEventListener( 'click', (evt)=>{ this.setHidden() })
 		this.setHidden( hide==undefined? false : hide )	
 		this.items = []
+	}
+	nxtId(){
+		this.idcnt++
+		return `${this.id}_${this.idcnt}`
 	}
 	clearGroup(){
 		this.bdy.innerHTML = ''
@@ -213,7 +220,7 @@ export class GUI {
 		el.hidden = enab==undefined? !el.hidden : enab
 	}
 	addItem( lbl, typ, str, fn ){
-		let id = `${this.id}${this.items.length}`
+		let id = this.nxtId()
 		let nm = lbl
 		if (nm=='') nm = str
 		let itm = { nm:nm, lbl: lbl, typ: typ, str: str, id: id }
@@ -232,7 +239,7 @@ export class GUI {
 				id = el.id
 				break
 			case 'div':
-				el = HUI.newEl( 'pre', id, 'gui', str )
+				el = HUI.newEl( 'span', id, 'gui', str )
 				//let pre = HUI.newEl( 'pre', '', '', str )
 				//el.appendChild( pre )
 				break

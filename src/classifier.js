@@ -23,12 +23,18 @@ export class DataClassifier {		// data object categorizer => display classes
 		this.fields = {}	// info about sub-fields
 		this.offset = 0		// offset within data
 	}
-	defData( nm, rng, fmt, hide ){		// define range as data subregion
-		let fd = this.defFld( nm, rng, fmt, !hide )
-		fd.classifier = new DataClassifier( this.nm + '.' + nm, this.data.slice( rng[0], rng[1] ), this)
-		fd.classifier.offset = rng[0]
-		fd.classifier.gui.setHidden( hide==undefined? false : hide )
+	defData( nm, rng, fmt, enab ){		// define range as data subregion
+		let fd = this.defFld( nm, rng, fmt, enab )
+		fd.classifier = new DataClassifier( this.nm + '.' + nm, this.data.slice( rng[0], rng[1]+1 ), this)
+		fd.classifier.offset = rng[0]+this.offset
+		fd.classifier.gui.setHidden( enab==undefined? true : enab )
 		return fd.classifier
+	}
+	defSubCls( nm, rng, enab ){
+		let cls = new DataClassifier( this.nm + '.' + nm, this.data.slice( rng[0], rng[1] ), this)
+		cls.offset = rng[0]
+		cls.gui.setHidden( enab==undefined? true : enab  )
+		return cls
 	}
 	defFld( nm, rng, fmt, enab ){	// define range as field classified with format
 		if ( rng instanceof Array ){
@@ -57,7 +63,7 @@ export class DataClassifier {		// data object categorizer => display classes
 		if ( rlen==1 ) // return value of single word
 			return this.data[ fd.rng[0]-this.offset ]
 		else  // or slice for a range
-			return this.data.slice( fd.rng[0]-this.offset, fd.rng[1]-this.offset )
+			return this.data.slice( fd.rng[0]-this.offset, fd.rng[1]-this.offset+1 )
 	}
 	addRngCat( nm, rng, fmts ){
 		if ( fmts == undefined ) fmts = this.defaultFmt
@@ -123,7 +129,7 @@ export class DataClassifier {		// data object categorizer => display classes
 		switch (fmt){
 			case 'O': return `<span class="${cls}">${O(val)}</span>` 
 			case 'H': return `<span class="${cls}">${H(val)}</span>` 
-			case 'I': return `<span class="${cls}">${asInst(val)}</span>` 
+			case 'I': return `<span class="${cls}">${I(val)}</span>` 
 		}
 	}
 	asData( addr, data, SW ){	// => 'data' formatted & classified 
@@ -158,10 +164,3 @@ export class DataClassifier {		// data object categorizer => display classes
 	}	
 }
 
-// var AltoI
-// export function asInst( wd ){
-	// if ( AltoI == undefined ) AltoI = new AltoInstr()
-	// let a = AltoI.frInstr( wd )
-	// let s = AltoI.toStr( a )
-	// return s
-// }

@@ -3,9 +3,12 @@
 	import { HUI, GUI } 									from './htmlui.js'
 	import './gb53.css'
 	import { ADsk } 										from './adsk.js'
-	import { AltoInstr, AltoRun, AltoSyms } 				from './altoinst.js'
+	import { AltoInstr } 									from './altoinst.js'
 	import { DataClassifier } 								from './classifier.js'
 	import { asBStr, asTxt, asChrs, padSpc, O, H, I  } 		from './fmt.js'
+	import { AltoRun } 										from './altorun.js'
+	import { AltoSyms } 									from './altosyms.js'
+	import { saveAs } 										from 'file-saver'
 	
 export class App {
 
@@ -249,6 +252,7 @@ export class App {
 			if ( cf.Run==undefined ){
 				cf.runGroup = cf.filegrp.resetGroup( cf.runGroup, 'run', '.run:', false )
 				cf.runGroup.addCheckbox( 'vbose', ()=>{ cf.Run.tglVerbose() } )
+				cf.runGroup.addButton('cFile', ()=>{ this.svCFile() }) 
 				cf.runGroup.addBreak()
 				cf.classifier = new DataClassifier( 'run', cf.filedata, cf.runGroup )
 				
@@ -267,6 +271,13 @@ export class App {
 			cf.classifier = new DataClassifier( ext, cf.filedata, cf.filegrp )
 
 		return cf.nm + ':<br>' + cf.classifier.showData( cf.filedata, App.SW, App.dataWidth )
+	}
+	svCFile(){
+		let cf = this.currfile
+		let fnm = cf.nm.substring(0,cf.nm.indexOf('.')) + '.c'
+		let txt = cf.Run.asCFile( fnm, cf.runGroup.getVal('vbose'))
+		let blob = new Blob( [txt], {type: "text/plain;charset=utf-8"} )
+		saveAs( blob, fnm )
 	}
 	addMsg( s ){
 		this.sbar.addLine( '', s )

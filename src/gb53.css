@@ -131,9 +131,9 @@ body			{  height: 100%;  width: 100%;  margin: 0;
 						"sbar data";
 				}
 pre				{ line-height: 19px; }
-#Popup			{ 	position: absolute;  left:250px; top: 150px;
+#Popup			{ 	position: absolute;  left:250px; top: 100px;
 					border: 1px solid black; margin: 10px; padding: 10px;
-					background-color: var(--L3); overflow-y: auto;
+					background-color: var(--L3); overflow-y: auto; height: 700px;
 				}
 .hide			{ display: none }
 #Test			{ position: absolute;  visibility: hidden;

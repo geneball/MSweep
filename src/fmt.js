@@ -59,6 +59,6 @@ export function	CH( v ){		// => 0x hex
 var AI = null
 export function	I( v ){		// display v as AltoInstruction opcode
 	if (AI == null ) AI = new AltoInstr()
-	let a = AI.frInstr( wd )
+	let a = AI.frInstr( v )
 	return AI.toStr( a )
 }
