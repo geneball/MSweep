@@ -2,36 +2,10 @@
 	import { err, msg, statusMsg, question } 				from './msg.js'
 	import { HUI, GUI } 									from './htmlui.js'
 	import './gb53.css'
-	import { ADsk } 										from './adsk.js'
-	import { AltoInstr } 									from './altoinst.js'
-	import { DataClassifier } 								from './classifier.js'
-	import { asBStr, asTxt, asChrs, padSpc, O, H, I  } 		from './fmt.js'
-	import { AltoRun } 										from './altorun.js'
-	import { AltoSyms } 									from './altosyms.js'
 	import { saveAs } 										from 'file-saver'
 	
 export class App {
 
-	static SW = { pad: false, hex: false, oct: false, chrs: false, txt: false, code: false }
-	static SWNames = [ 'pad', 'hex', 'oct', 'chrs', 'txt', 'code' ]
-	static SWBinary = { pad: false, hex: true, oct: false, chrs: true, txt: false, code: false }
-	static SWText =    { pad: false, hex: false, oct: false, chrs: false, txt: true, code: false }
-	static displayFmts = {
-		'RUN.':	App.SWBinary,
-		'D.': 	App.SWText,
-		'BT.': 	App.SWText,
-		'BS.': 	App.SWText,
-		'BCPL.': App.SWText
-	}
-	static extList = [ '', '.RUN.', '.SYMS.' ]
-	static fileExt = ''
-	
-	static currApp
-	
-	static Refresh(){
-		if ( App.currApp != undefined )
-			App.currApp.refreshData()
-	}
 
 	constructor( title ){
 		let el = HUI.gEl('title')
@@ -48,23 +22,11 @@ export class App {
 		// this.gui.addText( 'Loc:', '0', (addr) => { App.dumpAddr = parseInt( addr, 8) } )
 		// this.gui.addButton( 'Next', ()=> { App.dumpAddr += App.dumpStep })
 
-		for (let sw of App.SWNames )
-			this.gui.addCheckbox( sw, ()=>{ this.updSw() } )
-
-		this.gui.addButton( 'Colors', ()=> { this.chooseColor() })
-		this.gui.addText( 'FID', '001a', this.showDisk.bind(this) ) 
-		this.gui.addText( 'pg', '1', this.showDisk.bind(this) ) 
-		this.gui.addButton( 'showDisk', this.showDisk.bind(this) ) 
-		addEventListener("resize", this.showDisk.bind(this) );
-		
-		this.filecnt = 0
-		this.openfiles = {}
-		
 		this.sbar = new GUI( 'sideBar', 'sb', '>' )
 		this.sbar.addFile( 'Disk:', '.dsk', this.getDsk.bind(this) )
 		this.sbar.addSelector('', App.extList, (val)=>{ this.chooseExt(val) })
 		
-		this.updSw()
+	//	this.updSw()
 		// color formatting
 		HUI.gEl('b19').checked = true
 		HUI.gEl('t09').checked = true
@@ -111,9 +73,6 @@ export class App {
 		HUI.gEl('fmtexample').className = clses
 	}
 
-	refreshData(){
-		HUI.gEl('data').innerHTML = this.showFileData(  )
-	}
 	setDisplayFmt( cf ){
 		if ( cf.displayfmt == undefined ){
 			let ext = cf.nm.substring( cf.nm.indexOf('.')+1 ).toUpperCase()
@@ -165,36 +124,6 @@ export class App {
 			HUI.gEl('data').innerHTML = this.showData()
 		})
 	}
-	getDsk( files ){
-		if (files[0]==undefined) return
-		let nm = files[0].name
-		msg( `loading ${nm}...` )
-		this.sbar.setVal('Disk:', `Disk: ${nm}` )
-		this.sbar.addButton( '+File', ()=>this.showDisk() )
-		this.disk = new ADsk( files[0], ()=>{ this.showDisk()} )
-	}
-	showDisk(){
-		if (this.disk==undefined) return
-		if ( this.fileselector == undefined ){
-			App.fileList = this.disk.fileNames()
-			App.fileList.sort()
-			this.chooseExt( App.fileExt )
-			
-			this.fileselector = this.sbar.addSelector('', App.selFiles, (val)=>{ 
-				let el = HUI.gEl( this.fileselector )
-				el.hidden=true
-				//el.parentElement.innerText += val
-				this.showFile( val ) 
-			} )
-			HUI.gEl('data').innerHTML = this.disk.showPages( 0, 0 )
-		} else {
-			let el = HUI.gEl( this.fileselector )
-			el.hidden = false
-			let fid = this.gui.getVal('FID')
-			let pg = this.gui.getVal('pg')
-			HUI.gEl('data').innerHTML = this.disk.showPages( fid, parseInt(pg) )
-		}
-	}
 	selFile( cf ){
 		for (let f of Object.values( this.openfiles )){
 			if ( f != cf )
@@ -204,73 +133,6 @@ export class App {
 		this.currfile = cf
 		this.setDisplayFmt( cf )
 		this.refreshData()
-	}
-	showFile( fnm ){ 		// called once on file selection
-		if ( this.disk == undefined ) return
-		
-		for (let f of Object.values( this.openfiles ))
-			f.filegrp.setHidden(true)
-		
-		let cf =  { nm: fnm, idx: this.filecnt++ }
-		this.openfiles[fnm] = this.currfile = cf
-		let fidx = `file${cf.idx}`
-		
-		cf.filegrp = this.sbar.resetGroup( cf.filegrp, fidx, fnm, false, ()=>{ this.selFile(cf) } ) 
-
-		
-		let f = this.disk.fileInfo( fnm )
-		let descr = this.disk.checkFile( fnm )
-		HUI.gEl('data').innerHTML = ` ${descr} <br> fid: ${f.fid} <br>`
-				
-		cf.pgbtns = cf.filegrp.resetGroup( cf.pgbtns, 'pb', 'PgBtns', true )
-		for ( let i=0; i<f.npages; i++ ){
-			cf.pgbtns.addButton( `${i}`, ()=>this.showPage( f.pgs[i] ) )
-		}
-		this.setDisplayFmt( cf )
-		this.refreshData( )
-	}
-	showPage( vda ){
-		let pg = this.disk.diskPage( vda )
-		
-		let txt = `<pre> Pg${vda}=${H(vda)}:  <br>`
-		txt += `  fid: ${pg.fid}  filepage: ${pg.filepage} nbytes: ${pg.nbytes} <br>`
-		txt += `  nxtRDA:${H(pg.nextRDA)} vda:${H(this.disk.RDAtoVDA(pg.nextRDA))} <br>`
-		txt += `  prvRDA:${H(pg.prevRDA)} vda:${H(this.disk.RDAtoVDA(pg.prevRDA))} <br>`
-		txt += `  isFreePg:${pg.isFreePg} isFilePg: ${pg.isFilePg} isDirPg: ${pg.isDirPg} <br>`
-		txt += `  pagenum:${pg.pagenum} hdr: ${H(pg.hdr[0])}${H(pg.hdr[1])} <br></pre>`
-		HUI.gEl('data').innerHTML = txt
-		
-		let cls = new DataClassifier( 'diskPg', pg.data, this.sbar )
-		HUI.gEl('data').innerHTML += cls.showData( pg.data, App.SWBinary, App.dataWidth )
-	}
-	showFileData( ){
-		if ( !this.disk || !this.currfile ) return ''
-		let cf = this.currfile
-		cf.filedata = this.disk.fileData( cf.nm )
-		let ext = cf.nm.substring( cf.nm.indexOf('.') )
-		if ( ext.toUpperCase()=='.RUN.' ){
-			if ( cf.Run==undefined ){
-				cf.runGroup = cf.filegrp.resetGroup( cf.runGroup, 'run', '.run:', false )
-				cf.runGroup.addCheckbox( 'vbose', ()=>{ cf.Run.tglVerbose() } )
-				cf.runGroup.addButton('cFile', ()=>{ this.svCFile() }) 
-				cf.runGroup.addBreak()
-				cf.classifier = new DataClassifier( 'run', cf.filedata, cf.runGroup )
-				
-				cf.Run = new AltoRun( cf.nm, cf.classifier )
-			}
-		} else	if ( ext.toUpperCase()=='.SYMS.' ){
-			if ( cf.Syms==undefined ){
-				cf.symsGroup = cf.filegrp.resetGroup( cf.symsGroup, 'syms', '.syms:', false )
-				cf.symsGroup.addCheckbox( 'vbose', ()=>{ cf.Syms.tglVerbose() } )
-				cf.classifier = new DataClassifier( 'sym', cf.filedata, cf.symsGroup )
-				cf.symsGroup.addBreak()
-				
-				cf.Syms = new AltoSyms( cf.nm, cf.classifier )
-			}
-		} else
-			cf.classifier = new DataClassifier( ext, cf.filedata, cf.filegrp )
-
-		return cf.nm + ':<br>' + cf.classifier.showData( cf.filedata, App.SW, App.dataWidth )
 	}
 	svCFile(){
 		let cf = this.currfile
@@ -283,4 +145,4 @@ export class App {
 		this.sbar.addLine( '', s )
 	}
 }
-var jsApp = new App( 'AltoDecode gb53 Apr2023' )
+var jsApp = new App( 'App js template gb53 Apr2023' )

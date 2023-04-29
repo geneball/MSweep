@@ -1,7 +1,7 @@
 {
-  "name": "AltoDecode",
+  "name": "App",
   "version": "1.0.0",
-  "description": "decoder of Xerox Alto .dsk files, and .RUN or .SYMS files stored on them",
+  "description": "app template",
   "main": "app.js",
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
