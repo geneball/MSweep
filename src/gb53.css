@@ -20,7 +20,11 @@
    --L7:  hsl(270, 100%, 75%);
    --L8:  hsl(300, 100%, 75%);
    --L9:  hsl(  0, 100%, 100%);
-
+   
+   --G0:  hsl(  0, 0%,  80%);
+   --G1:  hsl(  0, 0%,  60%);
+   --G2:  hsl(  0, 0%,  40%);
+   --G3:  hsl(  0, 0%,  20%);
 }
 
 /*  field highlighting--  border-color,text-color,background-color */
@@ -99,6 +103,23 @@
 .off 		{ display: none; }
 
 
+.grd		{ display: inline-block; border: 1px solid black; box-shadow: 1px 1px 1px 1px #7F797C; width: 30px; height: 30px;
+			  text-align: center; vertical-align: middle; font-size: 18px; font-weight: bold;
+			  background-color: white; }
+.sec		{ color: var(--G2); background-color: var(--G2); }
+.mark		{ color: var(--L2); background-color: var(--L2); }
+.wrong		{ color: black; background-color: red; }
+.right		{ color: black; background-color: green; }
+.tm			{ font-size: 24px; color: red; }
+.t0			{ color: white; }
+.t1			{ color: blue; }
+.t2			{ color: green; }
+.t3			{ color: red; }
+.t4			{ color: purple; }
+.t5			{ color: cyan; }
+.t6			{ color: green; }
+.t7			{ color: red; }
+.t8			{ color: red; }
 /* graphEd 
 .sel 		{ color: red; }
 .guide		{ color: blue; }
@@ -124,11 +145,11 @@ html 			{  height: 100%; }
 body			{  height: 100%;  width: 100%;  margin: 0;	
 					font-family: Ubuntu;  background: var(--L2);
 					overflow: hidden;   display: grid;  
-					grid-template-columns: 300px auto;
-					grid-template-rows: 80px auto;
+					grid-template-columns: 100%;
+					grid-template-rows: 60px 1000px;
 					grid-template-areas: 
-						"hdr hdr"
-						"sbar data";
+						"hdr"
+						"data";
 				}
 pre				{ line-height: 19px; }
 #Popup			{ 	position: absolute;  left:250px; top: 100px;
@@ -147,6 +168,7 @@ pre				{ line-height: 19px; }
 #headerContent 	{  margin-left: 10px;  font-weight: bold; }
 input[type=file]	{ visibility: hidden; width: 5em; }
 .gui input[type=text]		{ width: 3em; }
+.gui input[type=number]		{ width: 3em; }
 .gui 			{  margin: 0 0 0 5px; }
 .guibx		 	{  border: 1px solid black; padding: 0 2px 0 2px; }
 .glev1			{  margin-left: 10px; }

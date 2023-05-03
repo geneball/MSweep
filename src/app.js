@@ -22,9 +22,15 @@ export class App {
 		// this.gui.addText( 'Loc:', '0', (addr) => { App.dumpAddr = parseInt( addr, 8) } )
 		// this.gui.addButton( 'Next', ()=> { App.dumpAddr += App.dumpStep })
 
-		this.sbar = new GUI( 'sideBar', 'sb', '>' )
-		this.sbar.addFile( 'Disk:', '.dsk', this.getDsk.bind(this) )
-		this.sbar.addSelector('', App.extList, (val)=>{ this.chooseExt(val) })
+		//this.sbar = new GUI( 'sideBar', 'sb', '>' )
+		this.gui.addNumber('X', 20 )
+		this.gui.addNumber('Y', 20 )
+		this.gui.addNumber('Pct', 20 )
+		this.gui.addButton('Safe', ()=>this.randSafeClick())
+		this.gui.addButton('Reset', ()=>this.resetField())
+		this.gui.addButton('Colors', ()=>this.chooseColor())
+		//this.sbar.addFile( 'Disk:', '.dsk', this.getDsk.bind(this) )
+		//this.sbar.addSelector('', App.extList, (val)=>{ this.chooseExt(val) })
 		
 	//	this.updSw()
 		// color formatting
@@ -32,6 +38,106 @@ export class App {
 		HUI.gEl('t09').checked = true
 		HUI.gEl('e09').checked = true
 		this.setFmt()		
+		
+		this.resetField()
+		HUI.addListener('data', 'mouseup', (evt)=>{ this.gridClick( evt ) })
+	}
+	gID( y, x ){
+		return 'm' + y.toString().padStart(2,'0') + x.toString().padStart(2,'0')
+	}
+	resetField(){
+		this.fillField( this.gui.getVal('X'),this.gui.getVal('Y'), this.gui.getVal('Pct')/100 )
+	}
+	fillField( xc, yc, pct ){
+		this.XSize = xc
+		this.YSize = yc
+		
+		let vals = [ '*',     '',   '1',   '2',   '3',   '4',   '5',   '6',  '7',    '8' ]
+		let cls = [ 'b00', 't19', 't06', 't03', 't00', 't07', 't01', 't08', 't04', 't09' ]
+		let grid = [] 
+		let blanks = this.blanks = []
+		this.grid = grid
+		grid[-1]= []
+		grid[yc]= []
+		for (let y=0; y<yc; y++){
+			grid[y] = []
+			for (let x=0; x<xc; x++){
+				grid[y][x] = Math.random() < pct? -1 : 0
+			}
+		}
+		for (let y=0; y<yc; y++)
+			for (let x=0; x<xc; x++)
+				if (grid[y][x] >= 0){
+					for (let ny=y-1; ny<y+2; ny++)
+						for (let nx=x-1; nx<x+2; nx++){
+							console.log( `[${y},${x}] [${ny},${nx}]=${grid[ny][nx]}` )
+							if ( grid[ny][nx] == -1 )
+								grid[y][x]++;
+						}
+				}
+		let html = ''
+		for (let y=0; y<yc; y++){
+			for (let x=0; x<xc; x++){
+				let idx = grid[y][x]+1
+				let id = this.gID(y,x)
+				if (grid[y][x]==0) blanks.push( [ y,x] )	
+				html += `<span id="${id}" class="grd sec ${cls[idx]}"> ${vals[idx]} </span>`
+			} 
+			html += '<br>';
+		}
+		HUI.gEl('data').innerHTML = html;
+	}
+	neighbors( y, x ){
+		y = Number(y)
+		x = Number(x)
+		return [ [y-1,x-1], [y,x-1], [y+1,x-1], [y-1,x],[y+1,x], [y-1,x+1],[y,x+1],[y+1,x+1] ]
+	}
+	gridClick( evt ) {
+		let tgt = evt.target;
+		if ( !tgt.id.startsWith('m') || tgt.id.length != 5) return
+		let y = Number(tgt.id.substr(1,2)), x = Number(tgt.id.substr(3,4))
+		if (evt.button!=0){  
+			HUI.setClass( this.gID(y,x), 'mark' ); //scroll wheel
+		} else
+			this.doGridClick( y, x )
+	}
+	doGridClick( y, x ){
+		HUI.setClass( this.gID(y,x), 'sec', false );
+		if ( this.grid[y][x]==0){
+			let todo = this.neighbors(y,x); 
+			while (todo.length>0){
+				let [y2,x2] = todo.pop()
+				let id = this.gID(y2,x2)
+				if ( this.grid[y2][x2]>=0 && HUI.gEl(id).classList.contains('sec') ){
+					HUI.setClass( id, 'sec', false )
+					if (this.grid[y2][x2]==0){
+						let nbrs = this.neighbors( y2, x2 )
+						todo = todo.concat( nbrs )
+					}
+				}
+			}
+		} else if ( this.grid[y][x]<0 ){	//lost!
+			for (let y2=0; y2<this.YSize; y2++)
+				for (let x2=0; x2<this.XSize; x2++){
+					let id = this.gID(y2,x2)
+					if ( HUI.hasClass(id, 'mark'))
+						HUI.setClass(id, this.grid[y2][x2] >= 0? 'wrong':'right', true );
+					HUI.setClass( id, 'sec', false )
+				}
+		}
+	}
+	randSafeClick(){
+		let r = Math.floor( Math.random() * this.blanks.length )
+		let [y,x] = this.blanks[r]
+		this.doGridClick( y, x )
+		// while (true){	
+			// let rx = Math.floor( Math.random() * this.XSize)
+			// let ry = Math.floor( Math.random() * this.YSize)
+			// if ( this.grid[ry][rx]>=0 ){
+				// this.doGridClick( ry, rx )
+				// return
+			// }
+		// }
 	}
 	chooseExt( val ){
 		App.fileExt = val=='*'? '' : val
@@ -142,7 +248,7 @@ export class App {
 		saveAs( blob, fnm )
 	}
 	addMsg( s ){
-		this.sbar.addLine( '', s )
+		this.gui.addLine( '', s )
 	}
 }
-var jsApp = new App( 'App js template gb53 Apr2023' )
+var jsApp = new App( 'MSweep gb53 Apr2023' )
