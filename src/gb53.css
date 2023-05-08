@@ -25,6 +25,37 @@
    --G1:  hsl(  0, 0%,  60%);
    --G2:  hsl(  0, 0%,  40%);
    --G3:  hsl(  0, 0%,  20%);
+   --G4:  hsl(  0, 0%,  0%);
+   
+   --S00:  #ffffcc;   /* red scale */
+   --S01:  #ffeda0;
+   --S02:  #fed976;
+   --S03:  #feb24c;
+   --S04:  #fd8d3c;
+   --S05:  #fc4e2a;
+   --S06:  #e31a1c;
+   --S07:  #bd0026;
+   --S08:  #800026;
+   
+   --S10:  #ffffe5;   /* green scale */
+   --S11:  #f7fcb9;
+   --S12:  #d9f0a3;
+   --S13:  #addd8e;
+   --S14:  #78c679;
+   --S15:  #41ab5d;
+   --S16:  #238443;
+   --S17:  #006837;
+   --S18:  #004529;
+
+   --S20:  #fff7fb;   /* blue scale */
+   --S21:  #ece7f2;
+   --S22:  #d0d1e6;
+   --S23:  #a6bddb;
+   --S24:  #74a9cf;
+   --S25:  #3690c0;
+   --S26:  #0570b0;
+   --S27:  #045a8d;
+   --S28:  #023858;
 }
 
 /*  field highlighting--  border-color,text-color,background-color */
@@ -91,10 +122,38 @@
 .b18		{ background-color: var(--L8); }
 .b19		{ background-color: var(--L9); }
 
+.s00		{ background-color: var(--S00);	color: black; }
+.s01		{ background-color: var(--S01);	color: black; }
+.s02		{ background-color: var(--S02);	color: black; }
+.s03		{ background-color: var(--S03);	color: black; }
+.s04		{ background-color: var(--S04);	color: black; }
+.s05		{ background-color: var(--S05);	color: white; }
+.s06		{ background-color: var(--S06);	color: white; }
+.s07		{ background-color: var(--S07);	color: white; }
+.s08		{ background-color: var(--S08);	color: white; }
+.s10		{ background-color: var(--S10);	color: black; }
+.s11		{ background-color: var(--S11);	color: black; }
+.s12		{ background-color: var(--S12);	color: black; }
+.s13		{ background-color: var(--S13);	color: black; }
+.s14		{ background-color: var(--S14);	color: black; }
+.s15		{ background-color: var(--S15);	color: white; }
+.s16		{ background-color: var(--S16);	color: white; }
+.s17		{ background-color: var(--S17);	color: white; }
+.s18		{ background-color: var(--S18);	color: white; }
+.s20		{ background-color: var(--S20);	color: black; }
+.s21		{ background-color: var(--S21);	color: black; }
+.s22		{ background-color: var(--S22);	color: black; }
+.s23		{ background-color: var(--S23);	color: black; }
+.s24		{ background-color: var(--S24);	color: black; }
+.s25		{ background-color: var(--S25);	color: white; }
+.s26		{ background-color: var(--S26);	color: white; }
+.s27		{ background-color: var(--S27);	color: white; }
+.s28		{ background-color: var(--S28);	color: white; }
+
 
 #colorSel	{  }
 .modal		{ position: absolute; background-color: white; 
-				left: 100px; top: 100px; height: 330px; width: auto;
+				left: 100px; top: 100px; height: 460px; width: auto;
 				padding: 5px; border: 2px solid black;
 			}
 .cp 		{ display: inline-block; border: 1px solid black; padding: 3px; margin: 2px; font-size: 12px; }
@@ -103,23 +162,26 @@
 .off 		{ display: none; }
 
 
-.grd		{ display: inline-block; border: 1px solid black; box-shadow: 1px 1px 1px 1px #7F797C; width: 30px; height: 30px;
-			  text-align: center; vertical-align: middle; font-size: 18px; font-weight: bold;
-			  background-color: white; }
-.sec		{ color: var(--G2); background-color: var(--G2); }
-.mark		{ color: var(--L2); background-color: var(--L2); }
+.grd		{ display: inline-block; border: 1px solid gray; box-shadow: 1px 1px 1px 1px #7F797C; width: 20px; height: 20px;
+			  text-align: center; vertical-align: middle; font-size: 15px; font-weight: bold;
+			  background-color: white; -webkit-user-select: none; }
+.sec		{ color: var(--G0); background-color: var(--G0); }
+.mark		{ color: var(--S27); background-color: var(--S27); }
 .wrong		{ color: black; background-color: red; }
 .right		{ color: black; background-color: green; }
+.bombed		{ background-color: var(--S03); color: var(--S05);  }
+.exploding	{ color: red; }
+.exploded	{ background-color: var(--S06); color: var(--S07);  }
 .tm			{ font-size: 24px; color: red; }
-.t0			{ color: white; }
-.t1			{ color: blue; }
-.t2			{ color: green; }
-.t3			{ color: red; }
-.t4			{ color: purple; }
-.t5			{ color: cyan; }
-.t6			{ color: green; }
-.t7			{ color: red; }
-.t8			{ color: red; }
+.t0			{ background-color: var(--S10); color: var(--S12); }
+.t1			{ background-color: var(--S11); color: var(--S13); } 
+.t2			{ background-color: var(--S12); color: var(--S14); } 
+.t3			{ background-color: var(--S13); color: var(--S15); } 
+.t4			{ background-color: var(--S14); color: var(--S16); } 
+.t5			{ background-color: var(--S15); color: var(--S17); } 
+.t6			{ background-color: var(--S16); color: var(--S18); } 
+.t7			{ background-color: var(--S17); color: var(--G3); } 
+.t8			{ background-color: var(--S18); color: var(--G4); } 
 /* graphEd 
 .sel 		{ color: red; }
 .guide		{ color: blue; }
@@ -143,7 +205,7 @@
 
 html 			{  height: 100%; }
 body			{  height: 100%;  width: 100%;  margin: 0;	
-					font-family: Ubuntu;  background: var(--L2);
+					font-family: Ubuntu;  background: var(--L5);
 					overflow: hidden;   display: grid;  
 					grid-template-columns: 100%;
 					grid-template-rows: 60px 1000px;
@@ -160,7 +222,7 @@ pre				{ line-height: 19px; }
 #Test			{ position: absolute;  visibility: hidden;
 				  height: auto; width: auto; white-space: nowrap; font-family: courier; 
 				}
-#header 		{  grid-area: hdr;	background: var(--L1);	border: 1px solid black;  padding: 5px 0 0 0;  }
+#header 		{  grid-area: hdr;	background: var(--L5);	border: 1px solid black;  padding: 5px 0 0 0;  }
 #sideBar 		{  grid-area: sbar;	overflow-y: auto;	overflow-x: hidden;	border: 1px solid black;	background: var(--L1); }
 #data 			{  grid-area: data;	overflow: auto;   background: white;  border: 1px solid black;	min-width: 0; font-family: courier; }
 #data2			{  grid-area: data2; overflow: auto;   background: white;  border: 1px solid black;	min-width: 0; font-family: courier; }
