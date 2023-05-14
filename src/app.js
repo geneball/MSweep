@@ -53,7 +53,75 @@ export class App {
 	
 		HUI.addListener('data', 'contextmenu', (evt)=>evt.preventDefault() )
 		HUI.addListener('data', 'mouseup', (evt)=>{ this.gridClick( evt ) })
+		HUI.gEl('data').addEventListener('touchstart', (evt)=>{ this.touchstart( evt )}, { passive: false } )
+		HUI.gEl('data').addEventListener('touchend', (evt)=>{ this.touchend( evt )}, { passive: false } )
+		HUI.gEl('data').addEventListener('touchmove', (evt)=>{ this.touchmove( evt )}, { passive: false } )
+		//HUI.addListener('data', 'touchend', (evt)=>{ this.touchend( evt ) })
+		
+		this.longtouchtimer = 0;
+		this.touchduration = 500; //length of time we want the user to touch before we do something
+		this.touchZooming = false 
+		this.touchDist = 0
+		this.touchStartDist = 0
 	}
+	touchmove( evt ){
+		msg( `TM${evt.touches.length}` )
+		if ( evt.touches.length == 2 ){
+			let t1 = evt.touches.item(0)
+			let t2 = evt.touches.item(1)
+			let dx = t1.clientX - t2.clientX
+			let dy = t1.clientY - t2.clientY
+			this.touchDist = Math.round( Math.sqrt(dx*dx + dy*dy))
+			if ( this.touchStartDist == 0 )
+				this.touchStartDist = this.touchDist
+			let pct = Math.round( this.touchDist * 100 / this.touchStartDist )
+			msg( ` Z${pct}`, true )
+			HUI.gEl('data').style.zoom = `${pct}%`
+		}
+	}
+	touchstart( evt ) {
+		msg( `T${evt.touches.length}` )
+		this.clearTouch()
+		evt.preventDefault()
+		if ( evt.touches.length > 1 ){
+			this.touchZooming = true 
+			msg( 'TZ', true )
+		} else
+			this.longtouchtimer = setTimeout( this.onlongtouch.bind(this,evt), this.touchduration ); 
+	}
+	clearTouch(){
+		if (this.longtouchtimer != 0){
+			clearTimeout( this.longtouchtimer ) 
+			this.longtouchtimer = 0
+		}
+	}
+	touchend( evt ) {	
+		this.clearTouch() //stops short touches from firing the event
+		evt.preventDefault()
+		if ( this.touchZooming ){
+			msg( `E${evt.touches.length}` )
+			if ( evt.touches.length == 0 ){
+				this.touchZooming = false
+				this.touchStartDist = 0
+			}
+			return
+		}
+		let tgt = evt.target;
+		if ( !tgt.id.startsWith('m') || tgt.id.length != 5) return
+		let y = Number(tgt.id.substr(1,2)), x = Number(tgt.id.substr(3,4))
+		this.doGridClick( y, x, false )
+	}
+	onlongtouch( evt ){
+		let tgt = evt.target;
+		if ( !tgt.id.startsWith('m') || tgt.id.length != 5) return
+		let y = Number(tgt.id.substr(1,2)), x = Number(tgt.id.substr(3,4))
+		//msg( ` LT[${this.longtouchtimer}]`, true)
+		this.longtouchtimer = 0
+		HUI.setClass( this.gID(y,x), 'mark' ) //right click
+		HUI.setClass( this.gID(y,x), 'sec' ) 
+		evt.preventDefault()
+	}
+	
 	gID( y, x ){
 		if ( y<0 || y>=this.YSize ) return null
 		if ( x<0 || x>=this.XSize ) return null
@@ -145,11 +213,14 @@ export class App {
 		if ( !tgt.id.startsWith('m') || tgt.id.length != 5) return
 		let y = Number(tgt.id.substr(1,2)), x = Number(tgt.id.substr(3,4))
 		if (evt.button!=0){  
+			msg(' RC', true)
 			HUI.setClass( this.gID(y,x), 'mark' ); //right click
 			HUI.setClass( this.gID(y,x), 'sec' ); 
 			evt.preventDefault()
-		} else
+		} else {
+			msg(' LC', true)
 			this.doGridClick( y, x, false )
+		}
 	}
 	doGridClick( y, x, safe ){
 		let cid = this.gID(y,x)
