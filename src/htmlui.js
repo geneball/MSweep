@@ -204,6 +204,7 @@ export class GUI {
 		let el = HUI.gEl(itm.id)
 		switch (itm.typ){
 			case 'checkbox':  	return el.checked; break
+			case 'div':			return el.innerText; break
 			//case 'file':		el.parentElement.innerText = val
 			default: 			return el.value; break
 		}
@@ -214,6 +215,7 @@ export class GUI {
 		let el = HUI.gEl(itm.id)
 		switch (itm.typ){
 			case 'checkbox':  	el.checked = val; break
+			case 'div':			el.innerText = val; break
 			case 'file':		el.parentElement.innerText = val; break
 			default: 			el.value = val; break
 		}
@@ -245,7 +247,7 @@ export class GUI {
 				id = el.id
 				break
 			case 'div':
-				el = HUI.newEl( 'span', id, 'gui', str )
+				el = HUI.newEl( 'span', id, 'gui guival', str )
 				//let pre = HUI.newEl( 'pre', '', '', str )
 				//el.appendChild( pre )
 				break
@@ -308,6 +310,10 @@ export class GUI {
 		let id = this.addItem( lbl, 'number', val, fn )
 		if (typeof fn == 'function' ) 
 			HUI.addListener( id, 'click', fn )
+		return id
+	}
+	addValue( lbl, val ){
+		let id = this.addItem( lbl, 'div', val )
 		return id
 	}
 	addText( lbl, str, fn ){

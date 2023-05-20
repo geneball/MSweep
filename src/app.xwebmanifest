@@ -1,14 +1,13 @@
 {
-  "background_color": "black",
-  "description": "js app",
+  "description": "ClearField: minesweeper variant",
   "display": "fullscreen",
   "icons": [
     {
-      "src": "icon/app.png",
+      "src": "icon/ClearField.png",
       "sizes": "192x192",
       "type": "image/png"
     }
   ],
-  "name": "jsApp GeneBall Mar2023",
-  "short_name": "App"
+  "name": "ClearField GeneBall May2023",
+  "short_name": "CField"
 }
