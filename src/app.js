@@ -14,6 +14,8 @@ export class App {
 		if (el) el.innerText = this.title
 		
 		this.Version = '1.0_5/20/23'
+
+		this.registerSW()
 		
 		let ng = Number( localStorage.getItem( 'nGames' ))
 		if ( ng==undefined ) localStorage.setItem( 'nGames', 0 )
@@ -42,22 +44,33 @@ export class App {
 
 		this.det = this.gui.addGroup('Details','Det', true)
 	//	this.gui.addBreak()
-		this.det.addValue( 'Secret:', 0 )
-		this.det.addValue( 'Cleared:', 0 )
+		this.det.addValue( 'Details:', 0 )
 				
 		this.resetApp()
 		this.showCnts()
 	
-		HUI.addListener('data', 'contextmenu', (evt)=>evt.preventDefault() )
-		HUI.addListener('data', 'mouseup', (evt)=>{ this.gridClick( evt ) })
+		let data = HUI.gEl('data')
+		data.addEventListener( 'contextmenu', (evt)=>evt.preventDefault() )
+		data.addEventListener( 'mouseup', (evt)=>{ this.gridClick( evt ) })
 		
-		HUI.gEl('data').addEventListener('touchstart', (evt)=>{ this.touchstart( evt )}, { passive: false } )
-		HUI.gEl('data').addEventListener('touchend', (evt)=>{ this.touchend( evt )}, { passive: false } )
-		HUI.gEl('data').addEventListener('touchmove', (evt)=>{ this.touchmove( evt )}, { passive: false } )
+		data.addEventListener( 'touchstart', (evt)=>{ this.touchstart( evt )}, { passive: false } )
+		data.addEventListener( 'touchend', (evt)=>{ this.touchend( evt )}, { passive: false } )
+		data.addEventListener( 'touchmove', (evt)=>{ this.touchmove( evt )}, { passive: false } )
 		document.addEventListener( 'keydown', (evt)=>{ this.keydown( evt )} )
 		window.addEventListener( 'resize', (evt)=>{ this.resizeApp() } )
-		document.body.addEventListener('click', (evt)=>{	HUI.setClass( 'Popup', 'hide', true ) })
+		document.addEventListener('click', (evt)=>{	HUI.setClass( 'Popup', 'hide', true ) })
 
+	}
+	registerSW(){
+		if ('serviceWorker' in navigator) {
+		   window.addEventListener('load', () => {
+			 navigator.serviceWorker.register('/service-worker.js').then(registration => {
+			   console.log('SW registered: ', registration)
+			 }).catch(registrationError => {
+			   console.log('SW registration failed: ', registrationError)
+			 })
+		   })
+		 }
 	}
 	resizeApp(){
 		this.windowW = window.innerWidth
@@ -68,7 +81,6 @@ export class App {
 		this.gameover = false
 		this.resizeApp() // record winow size
 		HUI.setClass( 'Popup', 'hide', true )
-		msg( this.title )
 		
 		let xc = this.XSize = this.opt.getVal('X')
 		let yc = this.YSize = this.opt.getVal('Y')
@@ -99,6 +111,7 @@ export class App {
 		let zmh = (bodyH-hdrH) / dataH
 		this.touchZoom = Math.trunc( (zmw < zmh? zmw : zmh) * 90 )
 		this.setZoom( this.touchZoom, 0,0 )
+		msg( this.title )
 		this.showCnts()
 	}
 	selCell( y, x ){
@@ -158,9 +171,8 @@ export class App {
 		for (let n in cnt)
 			if ( this[n] != cnt[n] ) debugger
 		
-		this.gui.setVal('Mines:', `${this.mines} - ${this.exploded}E - ${this.marked}M` )
-		this.det.setVal( 'Secret:', this.secret )
-		this.det.setVal( 'Cleared:', this.cleared )
+		this.gui.setVal('Mines:', `${this.mines} ${this.exploded}E ${this.marked}M` )
+		this.det.setVal('Details:', `${this.bombed}B ${this.cleared}C ${this.secret}S` )
 		if ( this.secret <= 0 ){
 			this.gameOver()
 		}
@@ -229,6 +241,14 @@ export class App {
 				html += `  ${st.format('H:mm')} ${end.diff(st,'minute',true).toFixed(1)}m  &nbsp;&nbsp; Score:${gm.score} <br>`
 			}
 		}
+		// if (this.touchHist != undefined){
+			// let tH = this.touchHist
+			// html = `pS:${tH.panStartPt.x},${tH.panStartPt.y} <br>`
+			// html += `tS:${tH.touchStartPt.x},${tH.touchStartPt.y} <br>`
+			// html += `sD:${tH.touchStartDist} Z:${tH.touchStartZoom} <br>`
+			// for ( let u of tH.updt ) 
+				// html += ` zm:${u.zm} dx:${u.dx} dy:${u.dy} <br>`
+//		}
 		HUI.gEl('Popup').innerHTML = html
 		HUI.setClass( 'Popup', 'hide', false )
 	}
@@ -242,6 +262,7 @@ export class App {
 		zm = Number(zm)
 		dy = Number(dy)
 		dx = Number(dx)
+		msg( `${dx},${dy}  ${zm}%` )
 		let data = HUI.gEl('data')
 		let gsize = { x: data.clientWidth, y: data.clientHeight }
 		let scrsize = { x: this.windowW*100/zm, y: this.windowH*100/zm - this.headerH }
@@ -260,10 +281,20 @@ export class App {
 		data.style.zoom = `${zm}%`
 		data.style.top = `${dy}px`
 		data.style.left = `${dx}px`
-	//	msg( ` => ${dx},${dy}  ${zm}%`, true )
+		msg( ` => ${dx},${dy}  ${zm}%`, true )
+		
+		let hdr = HUI.gEl('header')
+		let hdrw = Math.round( hdr.getBoundingClientRect().width )
+		let dtaw = Math.round( data.getBoundingClientRect().width )
+		msg( ` hW,dW:${hdrw},${dtaw}`, true )
+		let hzm = Math.round( dtaw*100/hdrw )
+		if (hzm < 100) hzm = 100
+		hdr.style.zoom = `${hzm}%` 
+		msg( ` & ${hzm}%`, true )
 	}
 	touchmove( evt ){
 		if ( evt.touches.length == 2 ){
+			let tH = this.touchHist = {}
 			let t1 = evt.touches.item(0)
 			let t2 = evt.touches.item(1)
 			this.touchPt = { x:(t1.clientX + t2.clientX)/2, y:(t1.clientY + t2.clientY)/2 }
@@ -276,16 +307,17 @@ export class App {
 				let r = data.getBoundingClientRect()
 				let lx = data.style.left, ty = data.style.top
 				//msg( `T,L=${ty},${lx}=${r.top},${r.left}` )
-				this.panStartPt = { x: Number( lx.replace('px','')), y: Number( ty.replace('px','')) }
-				
-				this.touchStartPt = { x: this.touchPt.x, y: this.touchPt.y }
-				this.touchStartDist = this.touchDist
-				this.touchStartZoom = this.touchZoom
+				tH.panStartPt = this.panStartPt = { x: Number( lx.replace('px','')), y: Number( ty.replace('px','')) }
+				tH.touchStartPt = this.touchStartPt = { x: this.touchPt.x, y: this.touchPt.y }
+				tH.touchStartDist = this.touchStartDist = this.touchDist
+				tH.touchStartZoom = this.touchStartZoom = this.touchZoom
+				tH.updt = []
 			}
 			this.touchZoom = Math.trunc( this.touchStartZoom * (this.touchDist / this.touchStartDist) )
 			let dx = Math.trunc( this.touchPt.x - this.touchStartPt.x )
 			let dy = Math.trunc( this.touchPt.y - this.touchStartPt.y )
 			//msg( `${this.panStartPt.x},${this.panStartPt.y} + ${dx},${dy} ` )
+			tH.updt.push( { zm: this.touchZoom, dy: this.panStartPt.y + dy, dx: this.panStartPt.x + dx } )
 			this.setZoom( this.touchZoom, this.panStartPt.y + dy, this.panStartPt.x + dx )
 		}
 	}
@@ -649,4 +681,4 @@ export class App {
 		this.gui.addLine( '', s )
 	}
 }
-var jsApp = new App( 'ClearField  May2023.4' )
+var jsApp = new App( 'ClearField  May2023.17' )
