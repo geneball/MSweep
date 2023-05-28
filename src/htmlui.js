@@ -77,10 +77,22 @@ export class HUI {
 	}
 	static hasClass( el, cls ){
 		el = HUI.gEl( el )
+		if ( cls instanceof Array ){
+			for ( let c of cls ){
+				if ( el.classList.contains( c ))
+					return true
+			}
+			return false
+		}
 		return el.classList.contains( cls )
 	}
 	static setClass( el, cls, enable ){		// 'enable'/disable class 'cls' of element 'el'  enable undefined => toggle
 		el = HUI.gEl( el )
+		if ( cls instanceof Array ){
+			for ( let c of cls )
+				HUI.setClass( el, c, enable )
+			return
+		}
 		let hascls = el.classList.contains( cls )
 		if (enable==undefined) enable = !hascls
 		if ( hascls ){

@@ -184,13 +184,15 @@
 .grd		{ display: inline-block; border: 1px solid gray; box-shadow: 1px 1px 1px 1px #7F797C; width: 20px; height: 20px;
 			  text-align: center; vertical-align: middle; font-size: 15px; font-weight: bold;
 			  background-color: white; -webkit-user-select: none; }
-.sel		{ border: 1px solid red; }
+.sel		{ border: 2px solid red; }
 .secret		{ color: var(--S33); background-color: var(--S33); }
 .marked		{ color: var(--S14); background-color: var(--S14); }
 .wrong		{ color: white; background-color: red; }
 .right		{ color: white; background-color: var(--S15); }
 .bombed		{ background-color: var(--S03); color: var(--S05);  }
 .freed		{ background-color: var(--S23); color: var(--S27);  }
+.processed	{ background-color: var(--S32); color: var(--S27);  }
+.procbombed	{ background-color: var(--S32); color: var(--S05);  }
 .exploding	{ color: red; }
 .exploded	{ background-color: var(--S04); color: var(--S07);  }
 .tm			{ font-size: 24px; color: red; }
@@ -204,7 +206,7 @@
 .t7			{ background-color: var(--S12); color: var(--D7); } 
 .t8			{ background-color: var(--S12); color: var(--L8); } 
 /* graphEd 
-.sel 		{ color: red; }
+.sel 		{ background-color: red; }
 .guide		{ color: blue; }
 #status 	{ text-align: center; padding-left: 5px; }
 #vardlg 	{ border: solid 1px black;}
@@ -229,7 +231,7 @@ body			{  height: 100%;  width: 100%;  margin: 0;
 					font-family: Ubuntu;  background: var(--L5);
 					overflow: hidden;   display: grid;  
 					grid-template-columns: 100%;
-					grid-template-rows: 80px 400px;
+					grid-template-rows: 80px 1400px;
 					grid-template-areas: 
 						"hdr"
 						"data";
@@ -245,7 +247,8 @@ pre				{ line-height: 19px; }
 				}
 #header 		{  grid-area: hdr;	background: var(--L5);	border: 1px solid black;  padding: 5px 0 0 0; font-size: 24px; z-index: 5; }
 #sideBar 		{  grid-area: sbar;	overflow-y: auto;	overflow-x: hidden;	border: 1px solid black;	background: var(--L1); }
-#data 			{  grid-area: data;	overflow: none;   background: var(--L5);  border: none; width: 425px; height: 425px; position: relative;
+#lower			{  grid-area: data; width: 100%; height: 100%; overflow: none; background: var(--L5);  border: none; }
+#data 			{  grid-area: data;	overflow: none;    width: 425px; height: 425px; position: relative;
 					min-width: 0; font-family: courier; white-space: nowrap;
 				}
 #data2			{  grid-area: data2; overflow: auto;   background: white;  border: 1px solid black;	min-width: 0; font-family: courier; }
