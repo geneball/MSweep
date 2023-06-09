@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
     "dev": "webpack serve --config ./bundler/webpack.dev.js",
-    "start": "http-server dist"
+    "start": "http-server -S -C cert.pem -K key.pem dist",
+    "start": "http-server -S -C cert.pem -K key.pem dist",
+    "serv": "http-server dist"
   },
   "keywords": [],
   "author": "Gene Ball",
