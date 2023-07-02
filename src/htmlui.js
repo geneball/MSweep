@@ -155,10 +155,11 @@ export class GUI {
 		if ( this.par==null ) 
 			err( `GUI: element ${parId} not found` )
 		this.nm = str? str : 'G'
+		let grpid = `guiG${GUI.guiCnt}`
 		this.id = `gui${GUI.guiCnt}`
 		GUI.guiCnt++
 		
-		let grp = HUI.newEl( 'span', '', 'gui_group', '' )
+		let grp = HUI.newEl( 'span', grpid, 'gui_group', '' )
 		this.grpnm = HUI.newEl( 'span', '', `gui_grpnm caret`, this.nm )
 		this.bdy = HUI.newEl( 'span', this.id, 'gui_body', '' )
 		//grp.appendChild( document.createElement( 'br' ))

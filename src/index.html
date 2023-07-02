@@ -8,11 +8,139 @@
 </head>
 <body>
 	<div id='header'>
-		<span id='info' class='gui'> </span>
+		<div id='Playing' class="hide">
+			<table> 
+				<tr>
+					<th> Game 		</th>
+					<th> Elapsed 	</th> 
+					<th> Errors 	</th>
+					<th> Hints 		</th>
+					<td> <button id='btnHint'> Hint </button></td>
+					<th> First completed: 	</th> 
+					<th> Best time: </th> 
+				</tr>
+				<tr>
+					<td id='Game'>  	E0001 	</td>
+					<td id='Time'>  	0:00 	</td>
+					<td id='Errors'>  	0/3  	</td>
+					<td id='Hints'>  	0/3  	</td>
+					<td><button id='btnQuit'> Quit </button></td>
+					<td id='FCompleted'> xx/xx/xx 	</td>
+					<td id='BestTime'>  xx:xx 	</td>
+				</tr>
+			</table>
+		</div>
+		<div id='Completed' class="hide">
+			<table> 
+				<tr>
+					<th> Time to complete:	</th>
+					<th id='Perfect'> </th> 
+					<th> Fewer errors than:	</th>
+					<th> Fewer hints than:	</th>
+					<th id='PctSlowerHd'> </th>
+				</tr>
+				<tr>
+					<td id='TCompleted'> 0:00 </td>
+					<td id='btnCmplt'> <button id='btnNewC'> New Game </button></td>
+					<td id='PctErr'> xx% </td>
+					<td id='PctHint'> xx% </td>
+					<td id='PctSlower'> xx% </td>
+				</tr>
+			</table>
+		</div>
+		<div id='CatStats' class="hide" >
+			<table> 
+				<tr>
+					<th> Difficulty: </th>
+					<th> # games completed:		</th>
+					<th> Streak:				</th>
+					<th></th>
+					<th> # perfect games: 		</th> 
+					<th> Perfect game Streak:	</th>
+				</tr>
+				<tr>
+					<th id='Diff'> Easy </th>
+					<td id='Cnt'> C  </td>
+					<td id='PerfCnt'> P </td>
+					<th id='spacer'></th>
+					<td id='Strk'> S </td>
+					<td id='PerfStrk'> Y </td>
+				
+					<td id='catbtn'><button id='btnNewCat'> New Game </button></td>
+				</tr>
+			</table>
+		</div>
+		<div id='UserRecords' class="hide" >
+			<table> 
+				<tr>
+					<th> First to complete:		</th>
+					<th> Fastest time: 		</th> 
+				</tr>
+				<tr>
+					<td id='FirstWin'> x  </td>
+					<td id='FastestWin'> y </td>
+				
+					<td><button id='btnNewUR'> New Game </button></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id='info' class='gui'> </div>
 	</div>
 	<div id='sideBar'> </div>
 	<div id='lower'>
-		<div id='data'> </div>
+		<div id='data' class='hide'> </div>
+		<div id='menu' class='btns'>
+		<table class='center'>
+			<tr><td><button id='btnE'> Easy </button></td> 
+				<td><button id='btnES'> Stats </button></td></tr>
+			<tr><td><button id='btnM'> Medium </button></td> 
+				<td>  <button id='btnMS'> Stats </button></td></tr>
+			<tr><td><button id='btnH'> Hard </button></td> 
+				<td>  <button id='btnHS'> Stats </button></td></tr>
+			<tr><td><button id='btnX'> Expert </button></td> 
+				<td>  <button id='btnXS'> Stats </button></td></tr>
+			<tr><td><button id='btnD'> Daily </button></td> 
+				<td>  <button id='btnDS'> Stats </button></td></tr>
+			<tr><td><button id='btnR'> User Records </button></td> 
+				<td><button id='btnHelp'> Help </button> </td></tr>
+		</table>
+		</div>
+		<div id='help' class='hide btns''> 
+			<div class='title'> ClearField </div>
+			<div class='subtitle'> Gene Ball <br> June 2023 </div>
+			<p class='help'>
+			Clear the field of mines by clicking on non-mined cells and marking
+			cells that contain mines.
+			Cleared cells (usually) contain a digit indicating the number of
+			mines in the 8 adjacent cells.
+			Every initial configuration can	be cleared without guessing.
+			Clicking a cell clears it, and long-clicking (or right-clicking)
+			a cell marks it as a mine (long-clicking a  marked cell again clears it).
+			</p>
+			<p class='help'>
+			Clearing a mine counts as an error.  If you get stuck, <b>Hint</b> will highlight
+			a cell that contains enough information to correctly clear or mark adjacent cells.
+			A game is completed successfully if the entire field is marked correctly
+			with fewer than 3 errors (and fewer than 3 hints). 
+			</p>
+			<p class='help'>
+			Choose a game at one of 4 levels of difficulty, or play the Game of the Day. <br>
+			<b>Stats</b> for each difficulty level include: 
+			<ul>
+			<li> the number of games you have completed,
+			<li> the number successfully completed in a streak,
+			<li> the number of games completed perfectly (no errors or hints),
+			<li> the length of your streak of perfect games.
+			</ul>
+			You will be informed if you are the first player to perfectly complete a
+			particular game, or you complete it faster than anyone else.  <b>User Records</b> keeps track
+			of the number of 'first games' you have achieved, and the number of fastest times that 
+			you still hold.
+			</p>
+			
+			<button id='btnNewH'> New Game </button>
+		</div>
 	</div>
 	<!-- <div id='data2'> </div> -->
 
